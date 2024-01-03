@@ -8,5 +8,5 @@ urlpatterns = [
     path('places/', views.PlaceList.as_view(), name = views.PlaceList.name),
     path('places/<int:pk>', views.PlaceDetail.as_view(), name = views.PlaceDetail.name),
 
-    path('cities/', views.CityList.as_view(), name = views.CityList.name),
+    path('locations/', views.LocationList.as_view(), name = views.LocationList.name),
 ]

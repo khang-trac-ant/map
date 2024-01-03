@@ -1,5 +1,5 @@
 from django.contrib.gis import admin
-from .models import Category, Place, City
+from .models import Category, Place, Location
 
 # Register your models here.
 admin.site.register(Category)
@@ -17,6 +17,6 @@ class CustomGeoAdmin(admin.GISModelAdmin):
 class PlaceAdmin(CustomGeoAdmin):
      pass
 
-@admin.register(City)
+@admin.register(Location)
 class PlaceAdmin(CustomGeoAdmin):
      pass

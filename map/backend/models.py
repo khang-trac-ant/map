@@ -31,13 +31,13 @@ class Place(models.Model):
     def __str__(self):
         return self.place_name
     
-class City(models.Model):
+class Location(models.Model):
     name = models.CharField(max_length=50)
     type = models.CharField(default='station')
     point_geom = models.PointField()
 
     class Meta:
-        verbose_name_plural = 'Cities'
+        verbose_name_plural = 'Locations'
 
     def __str__(self):
         return self.name

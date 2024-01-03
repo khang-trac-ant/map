@@ -1,4 +1,4 @@
-from .models import Category, Place, City
+from .models import Category, Place, Location
 from rest_framework import serializers
 from rest_framework_gis.serializers import GeoFeatureModelSerializer
 
@@ -23,7 +23,7 @@ class PlaceSerializer(GeoFeatureModelSerializer):
             'modified_at',
         )
 
-class CitySerializer(GeoFeatureModelSerializer):
+class LocationSerializer(GeoFeatureModelSerializer):
     proximity = serializers.SerializerMethodField('get_proximity')
 
     def get_proximity(self, obj):
@@ -32,7 +32,7 @@ class CitySerializer(GeoFeatureModelSerializer):
         return False
     
     class Meta:
-        model = City
+        model = Location
         geo_field = 'point_geom'
         fields = (
             'pk',

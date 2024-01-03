@@ -1,5 +1,5 @@
-from .models import Place, Category, City
-from .serializers import CategorySerializer, PlaceSerializer, CitySerializer
+from .models import Place, Category, Location
+from .serializers import CategorySerializer, PlaceSerializer, LocationSerializer
 from rest_framework import generics
 from django.http import Http404
 from django.contrib.gis.db.models.functions import Distance
@@ -26,16 +26,16 @@ class PlaceDetail(generics.RetrieveAPIView):
     serializer_class = PlaceSerializer
     name = 'places-detail'
 
-class CityList(generics.ListAPIView):
-    serializer_class = CitySerializer
-    name = 'city-list'
+class LocationList(generics.ListAPIView):
+    serializer_class = LocationSerializer
+    name = 'location-list'
 
     def get_queryset(self):
         placeID = self.request.query_params.get('placeid')
         if placeID is None:
             raise Http404
         selectedPlaceGeom = get_object_or_404(Place, pk=placeID).point_geom
-        nearestCities = City.objects.annotate(distance = Distance('point_geom', selectedPlaceGeom)).order_by('distance')[:3]
+        nearestCities = Location.objects.annotate(distance = Distance('point_geom', selectedPlaceGeom)).order_by('distance')[:3]
         return nearestCities
 
 

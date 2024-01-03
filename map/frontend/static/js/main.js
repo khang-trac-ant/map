@@ -2,10 +2,7 @@ document.addEventListener('DOMContentLoaded', init);
 
 function init() {
   //  Leaflet Map
-  const map = L.map('map').setView(
-    [10.778766026437442, 106.69519008483388],
-    14
-  );
+  const map = L.map('map').setView([10.81640644502297, 106.66402446727119], 14);
   L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution:
       '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
@@ -56,17 +53,17 @@ function init() {
     });
   };
 
-  // Add three nearest cities
-  var nearbyCitiesGeoJSONLayer;
-  const addNearbyCities = (geojson) => {
-    if (nearbyCitiesGeoJSONLayer) {
-      map.removeLayer(nearbyCitiesGeoJSONLayer);
+  // Add three nearest Locations
+  var nearbyLocationsGeoJSONLayer;
+  const addNearbyLocations = (geojson) => {
+    if (nearbyLocationsGeoJSONLayer) {
+      map.removeLayer(nearbyLocationsGeoJSONLayer);
     }
 
     function createCustomIcon(feature, latlng) {
       console.log({ feature });
 
-      let cityName = feature.properties.name;
+      let locationsName = feature.properties.name;
       let proximity = feature.properties.proximity;
 
       let myIcon = L.icon({
@@ -74,7 +71,7 @@ function init() {
       });
 
       return L.marker(latlng, { icon: myIcon }).bindPopup(
-        `<b>Tên thành phố</b>: ${cityName} <br/> <b>Khoảng cách</b>: ${proximity}`
+        `<b>${locationsName} </b><br/> <b>Khoảng cách</b>: ${proximity}`
       );
     }
 
@@ -85,10 +82,10 @@ function init() {
     L.geoJSON(geojson, myLayerOptions).addTo(map);
   };
 
-  // addNearbyCitiesLogic
-  const addNearbyCitiesLogic = (id) => {
-    let url = `/api/v1/cities/?placeid=${id}`;
-    fetchGetRequest(url, addNearbyCities);
+  // addNearbyLocationsLogic
+  const addNearbyLocationsLogic = (id) => {
+    let url = `/api/v1/locations/?placeid=${id}`;
+    fetchGetRequest(url, addNearbyLocations);
   };
 
   const placeImageElement = document.getElementById('placeimage');
@@ -99,7 +96,7 @@ function init() {
   const onEachFeatureHandler = (feature, layer) => {
     // Popup for feature - on click display the feature name
     let placeName = feature.properties.place_name;
-    layer.bindPopup(`<b>Tên địa điểm</b>: <br/>${placeName}`);
+    layer.bindPopup(`<b>${placeName}</b>`);
     // No image available source
     let noImageAvailable = './media/place_images/no_image_available.jpg';
 
@@ -115,7 +112,7 @@ function init() {
       menuTextElement.innerHTML = featureDescription;
 
       let featureID = feature.properties.pk;
-      addNearbyCitiesLogic(featureID);
+      addNearbyLocationsLogic(featureID);
     });
   };
 
