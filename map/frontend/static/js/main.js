@@ -71,7 +71,7 @@ function init() {
       });
 
       return L.marker(latlng, { icon: myIcon }).bindPopup(
-        `<b>${locationsName} </b><br/> <b>Khoảng cách</b>: ${proximity}`
+        `<b>${locationsName} </b><br/> <b>Khoảng cách</b>: ${proximity} Km`
       );
     }
 

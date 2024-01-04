@@ -32,6 +32,7 @@ class Place(models.Model):
         return self.place_name
     
 class Location(models.Model):
+    places = models.ForeignKey('Place', default=3, on_delete=models.CASCADE)
     name = models.CharField(max_length=50)
     type = models.CharField(default='station')
     point_geom = models.PointField()

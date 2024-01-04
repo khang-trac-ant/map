@@ -35,7 +35,7 @@ class LocationList(generics.ListAPIView):
         if placeID is None:
             raise Http404
         selectedPlaceGeom = get_object_or_404(Place, pk=placeID).point_geom
-        nearestCities = Location.objects.annotate(distance = Distance('point_geom', selectedPlaceGeom)).order_by('distance')[:3]
+        nearestCities = Location.objects.filter(places_id=placeID).annotate(distance = Distance('point_geom', selectedPlaceGeom)).order_by('distance')[:3]
         return nearestCities
 
 
